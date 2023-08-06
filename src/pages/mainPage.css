@@ -1,0 +1,66 @@
+.mainPage { 
+    width: 400px;
+    height: 500px;
+    background-color: var(--color_light-gray);
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    padding: 20px;
+    box-sizing: border-box;
+
+    font-family: 'Open Sans', sans-serif;
+    color: var(--color_black);
+}
+
+.mainPage h2 { 
+    margin: 15px auto 35px;
+    text-align: center;
+}
+
+.mainPage form { 
+    display: flex;
+    flex-direction: column;
+}
+.mainPage form label { 
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    line-height: 2rem;
+}
+.mainPage form label input {
+    width: 60%;
+    padding: 0 15px;
+    border-radius: 5px;
+    border: 1px solid var(--color_light-gray);
+    box-sizing: border-box;
+}
+
+
+.mainPage form label input:focus { 
+    outline-color: var(--color_dark-gray);
+}
+.mainPage form button { 
+    width: 12rem;
+    height: 2.3rem;
+    margin: 25px auto 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color_black);
+    color: var(--color_white)
+}
+.mainPage form button:focus { 
+    transform: scale(0.99)
+}
+
+
+
+.active { 
+    background-color: var(--color_dark-gray)
+}
+.deactive { 
+    background-color: red
+}
+
