@@ -1,55 +1,91 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface CalculatorProps {
   salary: number;
   year: number;
 }
 
-type resultProps = {
-  email: string;
-  gender: string;
-};
+interface TaxBracket {
+  min: number;
+  max?: number;
+  rate: number;
+}
 
-function Calculator({ salary }: CalculatorProps) {
-
-  // const calculateTax = (salary: number): number => {
-    
-  //   const taxRate = 0.2;
-  //   return salary * taxRate;
-  // };
-
-  // const taxAmount = calculateTax(salary);
+interface TaxData {
+  tax_brackets: TaxBracket[];
+}
 
 
-  const [result, setResult] = useState<resultProps[]>([]);
+function Calculator({ salary, year }: CalculatorProps) {
+  const [result, setResult] = useState<TaxData | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>()
+
+  useEffect(() => {
+    async function fetchTaxData() {
+      await fetch(`http://localhost:5000/tax-calculator/tax-year/${year}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          setErrorMsg(null);
+          return response.json();
+        })
+        .then((data) => {
+          setErrorMsg(null);
+          setResult(data);
+        })
+        .catch((error) => {
+          setErrorMsg('error');
+          console.error('Error fetching tax data:', error);
+        });
+    }
+  
+    fetchTaxData();
+  }, [salary ,year]);
 
 
-  function api<T>(): Promise<T> {
-    return fetch('http://localhost:5000/tax-calculator/tax-year/2022')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText)
-        }
-        return response.json() as Promise<T>
-      })
-      .then(data => {
-        console.log(data)
-        return data
-      })
-      .catch((error: Error) => {
-        console.log(error) 
-        throw error
-      })
-  }
 
-  api()
+
+  const calculateTaxAmount = (salary: number, tax_brackets: TaxBracket[]): number => {
+    let remainingSalary = salary;
+    let totalTax: number = 0;
+
+    for (const bracket of tax_brackets) {
+      const { min, max, rate } = bracket;
+
+      if (max && remainingSalary > max) {
+        totalTax += (max - min) * rate;
+      } else {
+        totalTax += (remainingSalary - min) * rate;
+        break;
+      }
+    }
+    return totalTax;
+  };
+
+
+
 
 
   return (
     <div>
       <h3>Calculation Result</h3>
-      {/* <p>Salary: ${salary}</p>
-      <p>Tax Amount: ${taxAmount}</p> */}
+      {result ? (
+        <>
+          <p>Salary: ${salary}</p>
+          <p>Tax Amount: ${calculateTaxAmount(salary, result.tax_brackets)}</p>
+        </>
+      ) :
+      errorMsg ? (
+        <>
+          <p>Something wrong happened, please try again later.</p>
+        </>
+      ) :
+      (
+        <>
+          <p>Loading tax data...</p>
+        </>
+      )}
     </div>
   );
 }

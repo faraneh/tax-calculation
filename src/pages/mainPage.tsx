@@ -5,7 +5,7 @@ import './mainPage.css'
 
 function MainPage() {
   const [salary, setSalary] = useState<number>(0);
-  const [year, setYear] = useState<number>(2012);
+  const [year, setYear] = useState<number>(2019);
   const [formStatus, setFormStatus] = useState<boolean>(false)
   const [formTrigger, setFormTrigger] = useState<boolean>(false)
 
@@ -30,7 +30,7 @@ function MainPage() {
 
   // Why useEffect: I put condition on input "onChange", instead of "formSubmit". initially I wanted to make it dynamic calculator!!
   useEffect(() => {
-    year < 2012 || year > currentYear ? setFormStatus(false) : 
+    year < 2019 || year > currentYear ? setFormStatus(false) : 
     salary < 0 ? setFormStatus(false) : 
     setFormStatus(true);
   }, [salary, year, currentYear])
@@ -54,13 +54,16 @@ function MainPage() {
           id="year"
           value={year}
           onChange={handleInputChange}
-          style={{outline: year < 2012 || year > currentYear ? "1px solid red" : 'none'}}
+          style={{outline: year < 2019 || year > currentYear ? "1px solid red" : 'none'}}
         /></label>
         <button type="submit">CALCULATE NOW</button>
       </form>
       {formStatus && formTrigger ? <Calculator salary={salary} year={year} /> : 
-      !formStatus && formTrigger ? <p style={{marginTop: 50}}>Please enter valid values.</p> : 
-      <p style={{marginTop: 50}}>Waiting...</p>}
+      !formStatus && formTrigger && (year < 2019 || year > currentYear) && salary < 0 ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> Both inputs are worng.</p> :
+      !formStatus && formTrigger && (year < 2019 || year > currentYear) ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> YEAR input is wrong.</p> : 
+      !formStatus && formTrigger && salary < 0 ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> SALARY input is wrong.</p> :
+      <p style={{marginTop: 50}}></p>}
+      {/* reminder to fill empty p */}
     </div>
   );
 }
