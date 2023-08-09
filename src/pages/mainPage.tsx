@@ -35,6 +35,8 @@ function MainPage() {
     setFormStatus(true);
   }, [salary, year, currentYear])
 
+  const MemoizedCalculator = React.memo(Calculator);
+
 
   return (
     <div className="mainPage">
@@ -58,12 +60,11 @@ function MainPage() {
         /></label>
         <button type="submit">CALCULATE NOW</button>
       </form>
-      {formStatus && formTrigger ? <Calculator salary={salary} year={year} /> : 
+      {formStatus && formTrigger ? <span data-testid="calculator-component"><MemoizedCalculator salary={salary} year={year} /></span> : 
       !formStatus && formTrigger && (year < 2019 || year > currentYear) && salary < 0 ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> Both inputs are worng.</p> :
       !formStatus && formTrigger && (year < 2019 || year > currentYear) ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> YEAR input is wrong.</p> : 
       !formStatus && formTrigger && salary < 0 ? <p style={{marginTop: 50}}>Please enter valid values.<br /><br /> SALARY input is wrong.</p> :
-      <p style={{marginTop: 50}}></p>}
-      {/* reminder to fill empty p */}
+      null}
     </div>
   );
 }

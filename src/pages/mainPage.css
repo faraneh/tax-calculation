@@ -1,6 +1,7 @@
 .mainPage { 
     width: 400px;
-    height: 500px;
+    height: fit-content;
+    min-height: 350px;
     background-color: var(--color_light-gray);
     border-radius: 20px;
     position: absolute;
@@ -12,8 +13,9 @@
 
     font-family: 'Open Sans', sans-serif;
     color: var(--color_black);
-}
+    line-height: 1.5rem;
 
+}
 
 .mainPage h2 { 
     margin: 15px auto 35px;
@@ -65,3 +67,13 @@
     background-color: red
 }
 
+
+
+/* Calculator designs */
+.calculator p { 
+    line-height: 1.8rem;
+    margin: 3px 0;
+}
+.calculator p:last-child { 
+    margin-bottom: 20px;
+}
