@@ -35,9 +35,19 @@ To run this project, you'll need the following:
 
 ## Usage
 
-1. Run the application:
+Run Docker Image:
+1. Pull Docker image required for this project
+2. Run Docker
+3. Open [Localhost:5000](http://localhost:5000/tax-calculator/tax-year/2020) to make sure Docker Image is running.
+
+Use Tax Calculator:
+1. Run the application using "npm start".
 2. Open your browser and navigate to `http://localhost:3000` to access the Tax Calculator.
 3. Enter the desired salary and year, then click the "CALCULATE NOW" button to see the calculated tax amount.
+
+Test with Jest:
+- Use "npm test -- --coverage"
+- Option2: use "npm test"
 
 
 
@@ -49,6 +59,9 @@ To run this project, you'll need the following:
 - Utilize a tax bracket system to calculate accurate tax amounts.
 - UI components designed using React and TypeScript.
 - Use of proper formatting for currency and number display.
+
+Technical Features:
+- Jest testing for 5 scenarios. covering 85% of the code.
 
 
 Extra libraries used for this project: 
@@ -65,6 +78,5 @@ Contributions are welcome! If you find any issues or want to enhance the project
 ## License
 
 This project is created for Points.com as a sample project.
----
 Created by Jenna (Faraneh) Javadinejad
 
