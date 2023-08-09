@@ -52,7 +52,7 @@ To run this project, you'll need the following:
 
 
 Extra libraries used for this project: 
- - [Mocking REST API](#https://mswjs.io/docs/getting-started/mocks/rest-api)
+ - [Mocking REST API](https://mswjs.io/docs/getting-started/mocks/rest-api) : 
 this library was used for testing async API fetch.
 
 
