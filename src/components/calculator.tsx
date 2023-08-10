@@ -59,7 +59,11 @@ const CalculateTaxAmount = (salary: number, tax_brackets: TaxBracket[]): number 
     const taxableIncome = typeof max === "number" ? Math.min(remainingSalary, max - min + 1) : Math.min(remainingSalary);
     totalTax += taxableIncome * rate;
     remainingSalary -= taxableIncome;
+
+    console.log({"min: ": min,"max: ": max,"rate: ": rate,"tax: ": taxableIncome * rate})
   }
+
+  console.log('Tax calculation completed.')
   return totalTax;
 };
 
