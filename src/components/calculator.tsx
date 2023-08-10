@@ -33,6 +33,7 @@ useEffect(() => {
       })
       .then((data) => {
         setErrorMsg(null);
+        console.log("Received data successfully.")
         setResult(data);
       })
       .catch( async (error)  => {
@@ -45,21 +46,19 @@ useEffect(() => {
 },[]);
 
 
-
-// get the bracket - calculate the tax - go grab the next bracket.
-const calculateTaxAmount = (salary: number, tax_brackets: TaxBracket[]): number => {
+const CalculateTaxAmount = (salary: number, tax_brackets: TaxBracket[]): number => {
+  
   let remainingSalary = salary;
   let totalTax: number = 0;
 
   for (const bracket of tax_brackets) {
     const { min, max, rate } = bracket;
 
-    if (min && max && remainingSalary > max) {
-      totalTax += (max - min) * rate;
-    } else {
-      totalTax += (remainingSalary - min) * rate;
-      break;
-    }
+    if (remainingSalary === 0) break;
+
+    const taxableIncome = typeof max === "number" ? Math.min(remainingSalary, max - min + 1) : Math.min(remainingSalary);
+    totalTax += taxableIncome * rate;
+    remainingSalary -= taxableIncome;
   }
   return totalTax;
 };
@@ -74,7 +73,7 @@ return (
     {result ? (
       <>
         <p>Salary: {Formatter(salary)}</p>
-        <p>Tax Amount: <span data-testid="contentinfo">{Formatter((calculateTaxAmount(salary, result.tax_brackets)))}</span></p>
+        <p>Tax Amount: <span data-testid="contentinfo">{Formatter((CalculateTaxAmount(salary, result.tax_brackets)))}</span></p>
       </>
       ) : ( !errorMsg ? (
         <>
